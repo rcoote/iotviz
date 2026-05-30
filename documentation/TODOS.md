@@ -1,0 +1,57 @@
+# Todo list (17/05/2026)
+
+The Todos:
+1. Add MQTT Client (each host can supply an MQTT Data to a Broker)
+*  Add 2D View
+*  Add 3D View
+*  Add terminal to connect remotely to any ssh host
+
+## MQTT Todos (Prio 1)
+
+Implement these:
+- Add Menu and Preferences Dialog to setup mqtt broker hostname and port
+    * Add separate clean QMainWindow (keep the Dialog) - ✓ 
+    * move stepwise widgets to the main window as needed - ☐
+    * Onclick preferences -> open Dialog - ☐
+
++ task 2
+* task 3
+
+1. ordered
+2. next ordered
+
+### Third Level Heading
+
+Some *italic* and **bold** text and `inline code`.
+
+An empty line starts a new paragraph.
+
+Use two spaces at the end  
+to force a line break.
+
+A horizontal ruler follows:
+
+---
+
+Add links inline like [this link to the Qt homepage](https://www.qt.io),
+or with a reference like [this other link to the Qt homepage][1].
+
+    Add code blocks with
+    four spaces at the front.
+
+> A blockquote
+> starts with >
+>
+> and has the same paragraph rules as normal text.
+
+First Level Heading in Alternate Style
+======================================
+
+Paragraph.
+
+Second Level Heading in Alternate Style
+---------------------------------------
+
+Paragraph.
+
+[1]: https://www.qt.io

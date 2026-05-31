@@ -6,7 +6,6 @@ The Todos:
 *  Add 3D View
 *  Add terminal to connect remotely to any ssh host
 
-
 # Create Website for the tool to get to know with interested people, contributers
 
 ## MQTT Todos (Prio 1)

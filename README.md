@@ -32,3 +32,7 @@ Under Linux use your repo manager zypper, apt-get to install libqt6mqtt.
 
 # Installation
 
+# Architecture and Philosophy
+
+-for max. computing performance and best UI expereince use native software libs, avoid browser technology, platform independance is achieved through cross compilation
+-for messaging use pub/sub messaging libraries such as mqtt, zero mq, etc.

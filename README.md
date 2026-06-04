@@ -36,3 +36,11 @@ Under Linux use your repo manager zypper, apt-get to install libqt6mqtt.
 
 -for max. computing performance and best UI expereince use native software libs, avoid browser technology, platform independance is achieved through cross compilation
 -for messaging use pub/sub messaging libraries such as mqtt, zero mq, etc.
+
+
+# Envisaged use cases of the software
+
+*plant monitoring
+*solar park monitoring
+*wind park monitoring
+*jurassic park monitoring

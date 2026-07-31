@@ -34,20 +34,18 @@ Under Linux use your repo manager zypper, apt-get to install libqt6mqtt.
 
 # Architecture and Philosophy
 
--for max. computing performance and best UI expereince use native software libs, avoid browser technology, platform independance is achieved through cross compilation
--for messaging use pub/sub messaging libraries such as mqtt, zero mq, etc.
-
+* for max. computing performance and best UI expereince use native software libs, avoid browser technology, platform independance is achieved through cross compilation
+* for messaging use pub/sub messaging libraries such as mqtt, zero mq, etc.
 
 # Envisaged use cases of the software
 
-*plant monitoring
-*solar park monitoring
-*wind park monitoring
-*jurassic park monitoring
-
+* plant monitoring
+* solar park monitoring
+* wind park monitoring
+* jurassic park monitoring :)
 
 # Extendibilaty
-*For every building/ asset you can create plugins or QT Widgets, than can display / manipulate the specific asset (sensor data, specific machinery commands).
+* For every building/ asset you can create plugins or QT Widgets, than can display / manipulate the specific asset (sensor data, specific machinery commands).
 
 
 # Sketching Wireframes

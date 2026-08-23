@@ -1,22 +1,16 @@
-include(../qssh.pri)
-
 QT += gui widgets sql
 CONFIG += console
 
 TARGET=hostmanager
 SOURCES+=main.cpp \
     HostManagerWindow.cpp \
-    argumentscollector.cpp \
     mainwindow.cpp \
-    remoteprocesstest.cpp \
     treeitem.cpp \
     treemodel.cpp
 
 HEADERS+=\
     HostManagerWindow.h \
-    argumentscollector.h \
     mainwindow.h \
-    remoteprocesstest.h \
     treeitem.h \
     treemodel.h
 
@@ -33,7 +27,7 @@ DISTFILES += \
     documentation/README.md \
     documentation/TODOS.md
 
-LIBS += -lQSsh
+#LIBS += -lX
 
 INCLUDEPATH += $$PWD/''
 DEPENDPATH += $$PWD/''

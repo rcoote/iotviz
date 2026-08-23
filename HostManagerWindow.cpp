@@ -26,10 +26,7 @@
 #include "HostManagerWindow.h"
 #include "ui_HostManagerWindow.h"
 
-#include "remoteprocesstest.h"
-
-#include <qssh/sftpfilesystemmodel.h>
-#include <qssh/sshconnection.h>
+// #include "remoteprocesstest.h"
 
 #include <QSqlDatabase>
 #include <QApplication>
@@ -44,8 +41,6 @@
 #include <iostream>
 
 using namespace Qt::StringLiterals;
-
-using namespace QSsh;
 
 extern QString broker;
 
@@ -63,7 +58,7 @@ HostManagerWindow::HostManagerWindow(QWidget *parent) : QDialog(parent), m_ui(ne
 
 
     connect(m_ui->connectButton, &QAbstractButton::clicked, this, &HostManagerWindow::connectToHost);
-    connect(m_ui->downloadButton, &QAbstractButton::clicked, this, &HostManagerWindow::downloadFile);
+    // connect(m_ui->downloadButton, &QAbstractButton::clicked, this, &HostManagerWindow::downloadFile);
     connect(m_ui->treeViewHosts, &QTreeView::clicked, this, &HostManagerWindow::treeViewHostsClicked);
     connect(m_ui->saveNotesButton, &QPushButton::clicked, this, &HostManagerWindow::buttonSaveNotesClicked);
     connect(m_ui->pushButtonSendCommand, &QPushButton::clicked, this, &HostManagerWindow::buttonSendCommandClicked);
@@ -79,7 +74,6 @@ HostManagerWindow::HostManagerWindow(QWidget *parent) : QDialog(parent), m_ui(ne
     m_ui->treeViewHosts->setModel(hostsModel);
     QSqlError err = connectToDatabase();
 
-    remoteProcessTest = new RemoteProcessTest();
 }
 
 HostManagerWindow::~HostManagerWindow()
@@ -90,50 +84,33 @@ HostManagerWindow::~HostManagerWindow()
 void HostManagerWindow::connectToHost()
 {
 
-    printf("", broker);
 
     m_ui->connectButton->setEnabled(false);
-    SshConnectionParameters sshParams;
-    sshParams.setHost(m_ui->hostLineEdit->text());
-    sshParams.setUserName(m_ui->userLineEdit->text());
-    sshParams.authenticationType
-            = SshConnectionParameters::AuthenticationTypeTryAllPasswordBasedMethods;
-    sshParams.setPassword(m_ui->passwordLineEdit->text());
-    sshParams.setPort(22);
-    sshParams.timeout = 5;
 
-    m_fsModel = new SftpFileSystemModel(this);
-    connect(m_fsModel, &SftpFileSystemModel::sftpOperationFailed,
-            this, &HostManagerWindow::handleSftpOperationFailed);
-    connect(m_fsModel, &SftpFileSystemModel::connectionError,
-            this, &HostManagerWindow::handleConnectionError);
-    connect(m_fsModel, &SftpFileSystemModel::sftpOperationFinished,
-            this, &HostManagerWindow::handleSftpOperationFinished);
+    // sshParams.setHost(m_ui->hostLineEdit->text());
+    // sshParams.setUserName(m_ui->userLineEdit->text());
+    // sshParams.authenticationType
+    //         = SshConnectionParameters::AuthenticationTypeTryAllPasswordBasedMethods;
+    // sshParams.setPassword(m_ui->passwordLineEdit->text());
+    // sshParams.setPort(22);
+    // sshParams.timeout = 5;
 
-    connect(m_fsModel, &SftpFileSystemModel::sftpConnectionSuccess,
-            this, &HostManagerWindow::handleConnectionSuccess);
+    // m_fsModel = new SftpFileSystemModel(this);
+    // connect(m_fsModel, &SftpFileSystemModel::sftpOperationFailed,
+    //         this, &HostManagerWindow::handleSftpOperationFailed);
+    // connect(m_fsModel, &SftpFileSystemModel::connectionError,
+    //         this, &HostManagerWindow::handleConnectionError);
+    // connect(m_fsModel, &SftpFileSystemModel::sftpOperationFinished,
+    //         this, &HostManagerWindow::handleSftpOperationFinished);
 
-    m_fsModel->setSshConnection(sshParams);
-    m_ui->fileSystemView->setModel(m_fsModel);
+    // connect(m_fsModel, &SftpFileSystemModel::sftpConnectionSuccess,
+    //         this, &HostManagerWindow::handleConnectionSuccess);
+
+    // m_fsModel->setSshConnection(sshParams);
+    //m_ui->fileSystemView->setModel(m_fsModel);
 }
 
-void HostManagerWindow::downloadFile()
-{
-    const QModelIndexList selectedIndexes = m_ui->fileSystemView->selectionModel()->selectedIndexes();
-    if (selectedIndexes.count() != 2)
-        return;
-    const QString targetFilePath = QFileDialog::getSaveFileName(this, tr("Choose Target File"),
-        QDir::tempPath());
-    if (targetFilePath.isEmpty())
-        return;
-    const SftpJobId jobId = m_fsModel->downloadFile(selectedIndexes.at(1), targetFilePath);
-    QString message;
-    if (jobId == SftpInvalidJob)
-        message = tr("Download failed.");
-    else
-        message = tr("Queuing download operation %1.").arg(jobId);
-    m_ui->outputTextEdit->appendPlainText(message);
-}
+
 
 void HostManagerWindow::treeViewHostsClicked(const QModelIndex &index)
 {
@@ -218,8 +195,7 @@ void HostManagerWindow::buttonSendCommandClicked()
         qDebug() << "executing " << m_currentCommand ;
     }
 
-    remoteProcessTest->setSshParams(m_sshParams);
-    remoteProcessTest->run(m_currentCommand);
+
 }
 
 void HostManagerWindow::buttonSaveCommandsClicked()
@@ -235,14 +211,14 @@ void HostManagerWindow::buttonSaveCommandsClicked()
 
 void HostManagerWindow::fileSystemFileClicked(const QModelIndex &index)
 {
-    QString fulpat = m_fsModel->getFullPath(index);
-    qDebug() << "Fullpath. " << m_fsModel->getFullPath(index);
+    // QString fulpat = m_fsModel->getFullPath(index);
+    // qDebug() << "Fullpath. " << m_fsModel->getFullPath(index);
     QString hostname = m_currentHostName;
 
     qDebug() << "Storing path in DB";
-    QSqlQuery query("UPDATE hosts set lastpath = '" + fulpat + "' WHERE hostname = '" + hostname + "'" );
-    auto result  = query.exec();
-    qDebug() << "Result: " << result ;
+    // QSqlQuery query("UPDATE hosts set lastpath = '" + fulpat + "' WHERE hostname = '" + hostname + "'" );
+    // auto result  = query.exec();
+    // qDebug() << "Result: " << result ;
 
 }
 
@@ -251,15 +227,15 @@ void HostManagerWindow::handleSftpOperationFailed(const QString &errorMessage)
     m_ui->outputTextEdit->appendPlainText(errorMessage);
 }
 
-void HostManagerWindow::handleSftpOperationFinished(SftpJobId jobId, const QString &error)
-{
-    QString message;
-    if (error.isEmpty())
-        message = tr("Operation %1 finished successfully.").arg(jobId);
-    else
-        message = tr("Operation %1 failed: %2.").arg(jobId).arg(error);
-    m_ui->outputTextEdit->appendPlainText(message);
-}
+// void HostManagerWindow::handleSftpOperationFinished(SftpJobId jobId, const QString &error)
+// {
+//     QString message;
+//     if (error.isEmpty())
+//         message = tr("Operation %1 finished successfully.").arg(jobId);
+//     else
+//         message = tr("Operation %1 failed: %2.").arg(jobId).arg(error);
+//     m_ui->outputTextEdit->appendPlainText(message);
+// }
 
 void HostManagerWindow::setHostNameToConnectTo(QString _hostName, QString _userName, QString _password, QString _lastPath, QString _notes)
 {
@@ -312,10 +288,10 @@ QSqlError HostManagerWindow::connectToDatabase()
 
 void HostManagerWindow::setSshParams(QString _hostname, QString _username, QString _password)
 {
-    m_sshParams.setHost(_hostname);
-    m_sshParams.setUserName(_username);
-    m_sshParams.authenticationType = SshConnectionParameters::AuthenticationTypeTryAllPasswordBasedMethods;
-    m_sshParams.setPassword(_password);
-    m_sshParams.setPort(22);
-    m_sshParams.timeout = 5;
+    // m_sshParams.setHost(_hostname);
+    // m_sshParams.setUserName(_username);
+    // m_sshParams.authenticationType = SshConnectionParameters::AuthenticationTypeTryAllPasswordBasedMethods;
+    // m_sshParams.setPassword(_password);
+    // m_sshParams.setPort(22);
+    // m_sshParams.timeout = 5;
 }

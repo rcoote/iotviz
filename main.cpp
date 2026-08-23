@@ -24,20 +24,16 @@
 **
 ****************************************************************************/
 
-#include <qssh/sshconnection.h>
 
 #include <QCoreApplication>
 #include <QObject>
 #include <QStringList>
 #include <cstdlib>
 #include <iostream>
-#include "argumentscollector.h"
 
 #include "HostManagerWindow.h"
 #include "qmainwindow.h"
 #include "mainwindow.h"
-#include <qssh/sftpfilesystemmodel.h>
-#include <qssh/sshconnection.h>
 
 #include <QApplication>
 #include <QTreeView>
@@ -50,7 +46,6 @@ QString broker;
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-
 
     HostManagerWindow hostManagerWin1;
     hostManagerWin1.show();

@@ -23,11 +23,10 @@
 **
 ****************************************************************************/
 
-#include <qssh/sftpdefs.h>
-#include "treemodel.h"
-#include "qssh/sshconnection.h"
 
-#include "remoteprocesstest.h"
+#include "treemodel.h"
+
+
 
 #include <QDialog>
 #include <QWindow>
@@ -40,9 +39,6 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class Window; }
 QT_END_NAMESPACE
 
-namespace QSsh { class SftpFileSystemModel; class SshConnectionParameters;
-}
-
 class HostManagerWindow : public QDialog
 {
     Q_OBJECT
@@ -52,19 +48,16 @@ public:
 
 private:
     //Members
-    QSsh::SftpFileSystemModel *m_fsModel;
     Ui::Window *m_ui;
     TreeModel *hostsModel;
     QString m_currentHostName;
     QString m_currentCommand;
-    QSsh::SshConnectionParameters m_sshParams;
-    RemoteProcessTest *remoteProcessTest;
+    //RemoteProcessTest *remoteProcessTest;
 
     void connectToHost();
     void downloadFile();
     void handleConnectionError(const QString &errorMessage);
     void handleSftpOperationFailed(const QString &errorMessage);
-    void handleSftpOperationFinished(QSsh::SftpJobId jobId, const QString &error);
     void handleConnectionSuccess();
     void setHostNameToConnectTo(QString _hostName, QString _userName, QString _password, QString _lastPath, QString _notes);
     void setCommandSnippets(QString _commandSnippets);

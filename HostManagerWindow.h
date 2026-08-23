@@ -36,8 +36,6 @@
 #include <QSqlField>
 #include <QSqlQuery>
 #include <QSqlRecord>
-#include <QMqttTopicName>
-#include <QMqttClient>
 QT_BEGIN_NAMESPACE
 namespace Ui { class Window; }
 QT_END_NAMESPACE
@@ -60,7 +58,6 @@ private:
     QString m_currentHostName;
     QString m_currentCommand;
     QSsh::SshConnectionParameters m_sshParams;
-    QMqttClient *m_client;
     RemoteProcessTest *remoteProcessTest;
 
     void connectToHost();
@@ -85,7 +82,6 @@ private:
     void setSshParams(QString _hostname, QString _username, QString _password);
 
 public slots:
-    void mqttBrokerConnected();
-    void mqttMessageReceived(QByteArray message, QMqttTopicName topic);
+
 
 };

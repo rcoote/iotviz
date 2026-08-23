@@ -1,6 +1,6 @@
 include(../qssh.pri)
 
-QT += gui widgets sql mqtt
+QT += gui widgets sql
 CONFIG += console
 
 TARGET=hostmanager
@@ -22,7 +22,6 @@ HEADERS+=\
 
 RESOURCES += \
     resources.qrc
-
 
 FORMS += \
     HostManagerWindow.ui \

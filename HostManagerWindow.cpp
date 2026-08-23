@@ -42,7 +42,6 @@
 #include <QtDebug>
 #include <QSettings>
 #include <iostream>
-#include <QMqttClient>
 
 using namespace Qt::StringLiterals;
 
@@ -56,21 +55,12 @@ HostManagerWindow::HostManagerWindow(QWidget *parent) : QDialog(parent), m_ui(ne
 
     QSettings settings("R.Coote", "Host Manager");
     settings.setValue("editor/wrapMargin", 68);
-    settings.setValue("mqtt/broker", "185.183.159.144");
 
-    broker = settings.value("mqtt/broker").toString();
     int margin = settings.value("editor/wrapMargin").toInt();
-
-    m_client = new QMqttClient();
-    m_client->setHostname(broker);
-    m_client->setPort(1883);
-    m_client->connectToHost();
-
 
 
     //Connect all SIGNALS
 
-    connect(m_client, &QMqttClient::connected, this, &HostManagerWindow::mqttBrokerConnected);
 
     connect(m_ui->connectButton, &QAbstractButton::clicked, this, &HostManagerWindow::connectToHost);
     connect(m_ui->downloadButton, &QAbstractButton::clicked, this, &HostManagerWindow::downloadFile);
@@ -329,34 +319,3 @@ void HostManagerWindow::setSshParams(QString _hostname, QString _username, QStri
     m_sshParams.setPort(22);
     m_sshParams.timeout = 5;
 }
-
-void HostManagerWindow::mqttBrokerConnected()
-{
-    m_client->subscribe(QMqttTopicFilter("Messages"));
-
-    connect(m_client, &QMqttClient::messageReceived, [this](const QByteArray &message, const QMqttTopicName &topic) {
-        const QString content = QDateTime::currentDateTime().toString()
-        + " Received Topic: "_L1
-            + topic.name()
-            + " Message: "_L1
-            + message
-            + u'\n';
-        qDebug() << "message" << content << "\n";
-        std::cout << "message " << content.toStdString();
-    });
-
-}
-
-void HostManagerWindow::mqttMessageReceived(QByteArray message, QMqttTopicName topic)
-{
-    const QString content = QDateTime::currentDateTime().toString()
-        + " Received Topic: "_L1
-            + topic.name()
-            + " Message: "_L1
-            + message
-            + u'\n';
-
-    qDebug()<< content;
-}
-
-

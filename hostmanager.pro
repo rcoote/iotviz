@@ -27,7 +27,7 @@ DISTFILES += \
     documentation/README.md \
     documentation/TODOS.md
 
-#LIBS += -lX
+LIBS += -lssh
 
 INCLUDEPATH += $$PWD/''
 DEPENDPATH += $$PWD/''

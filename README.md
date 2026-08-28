@@ -47,6 +47,5 @@ Under Linux use your repo manager zypper, apt-get to install libqt6mqtt.
 # Extendibilaty
 * For every building/ asset you can create plugins or QT Widgets, than can display / manipulate the specific asset (sensor data, specific machinery commands).
 
-
 # Sketching Wireframes
-*see sketches dir
+* see documentation dir

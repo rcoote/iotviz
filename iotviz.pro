@@ -1,7 +1,7 @@
 QT += gui widgets sql
 CONFIG += console
 
-TARGET=hostmanager
+TARGET=iotviz
 SOURCES+=main.cpp \
     HostManagerWindow.cpp \
     mainwindow.cpp \

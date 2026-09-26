@@ -31,3 +31,8 @@ LIBS += -lssh
 
 INCLUDEPATH += $$PWD/''
 DEPENDPATH += $$PWD/''
+
+
+include(/home/rcoote/work/QtSsh/QtSsh.pri)
+
+LIBS += -lssh2

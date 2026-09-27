@@ -1,9 +1,3 @@
-#include <QCoreApplication>
-#include "sshclient.h"
-#include "sshprocess.h"
-
-
-
 /****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.

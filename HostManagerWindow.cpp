@@ -40,6 +40,10 @@
 #include <QSettings>
 #include <iostream>
 
+
+#include "sshclient.h"
+#include "sshprocess.h"
+
 using namespace Qt::StringLiterals;
 
 extern QString broker;
@@ -81,6 +85,23 @@ HostManagerWindow::~HostManagerWindow()
 void HostManagerWindow::connectToHost()
 {
     m_ui->connectButton->setEnabled(false);
+
+    SshClient *client = new SshClient();
+
+    QObject::connect(client, &SshClient::sshReady, [=]() {
+        SshProcess *proc = client->getChannel<SshProcess>("cmd");
+        proc->runCommand("ls -la");
+
+        QObject::connect(proc, &SshProcess::finished, [=]() {
+            qDebug() << proc->result();
+            client->disconnectFromHost();
+        });
+    });
+
+    // QObject::connect(client, &SshClient::sshDisconnected, [&]() {app.quit(); });
+
+    client->setPassphrase(m_ui->passwordLineEdit->text());
+    client->connectToHost(m_ui->userLineEdit->text(), m_ui->hostLineEdit->text());
 
     // sshParams.setHost(m_ui->hostLineEdit->text());
     // sshParams.setUserName(m_ui->userLineEdit->text());

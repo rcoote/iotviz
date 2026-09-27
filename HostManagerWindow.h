@@ -23,11 +23,7 @@
 **
 ****************************************************************************/
 
-
 #include "treemodel.h"
-
-
-
 #include <QDialog>
 #include <QWindow>
 #include <QSqlDriver>
@@ -74,6 +70,5 @@ private:
     void setSshParams(QString _hostname, QString _username, QString _password);
 
 public slots:
-
 
 };

@@ -53,9 +53,7 @@ HostManagerWindow::HostManagerWindow(QWidget *parent) : QDialog(parent), m_ui(ne
 
     int margin = settings.value("editor/wrapMargin").toInt();
 
-
     //Connect all SIGNALS
-
 
     connect(m_ui->connectButton, &QAbstractButton::clicked, this, &HostManagerWindow::connectToHost);
     // connect(m_ui->downloadButton, &QAbstractButton::clicked, this, &HostManagerWindow::downloadFile);
@@ -66,14 +64,13 @@ HostManagerWindow::HostManagerWindow(QWidget *parent) : QDialog(parent), m_ui(ne
     connect(m_ui->pushButtonSaveCredentials, &QPushButton::clicked, this, &HostManagerWindow::buttonSaveCredentialsClicked);
     connect(m_ui->fileSystemView, &QTreeView::clicked, this, &HostManagerWindow::fileSystemFileClicked);
 
+    std::cout << "Loading hosts from hosts.txt..." << std::endl;
     QFile file("hosts.txt"_L1);
     file.open(QIODevice::ReadOnly | QIODevice::Text);
     hostsModel = new TreeModel(QString::fromUtf8(file.readAll()));
     file.close();
-
     m_ui->treeViewHosts->setModel(hostsModel);
     QSqlError err = connectToDatabase();
-
 }
 
 HostManagerWindow::~HostManagerWindow()
@@ -124,7 +121,7 @@ void HostManagerWindow::treeViewHostsClicked(const QModelIndex &index)
 
     //qDebug() << "SftpFsWindow::treeViewHostsClicked Clicked on column: " << index.column() << ", row : " << index.row() <<  ", data :" << index.data().toString();
     qDebug() << "Retrieving credentials from DB in any exist";
-
+    std::cout << "Retrieving credentials from DB in any exist" << std::endl;
     QSqlQuery query("SELECT * FROM hosts where hostname = '" + hostname + "'");
     while (query.next()) {
         hostname = query.value(0).toString();

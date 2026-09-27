@@ -52,7 +52,6 @@ private:
     TreeModel *hostsModel;
     QString m_currentHostName;
     QString m_currentCommand;
-    //RemoteProcessTest *remoteProcessTest;
 
     void connectToHost();
     void downloadFile();

@@ -80,8 +80,6 @@ HostManagerWindow::~HostManagerWindow()
 
 void HostManagerWindow::connectToHost()
 {
-
-
     m_ui->connectButton->setEnabled(false);
 
     // sshParams.setHost(m_ui->hostLineEdit->text());
@@ -107,8 +105,6 @@ void HostManagerWindow::connectToHost()
     //m_ui->fileSystemView->setModel(m_fsModel);
 }
 
-
-
 void HostManagerWindow::treeViewHostsClicked(const QModelIndex &index)
 {
     QString hostname = index.data().toString();
@@ -121,9 +117,10 @@ void HostManagerWindow::treeViewHostsClicked(const QModelIndex &index)
 
     //qDebug() << "SftpFsWindow::treeViewHostsClicked Clicked on column: " << index.column() << ", row : " << index.row() <<  ", data :" << index.data().toString();
     qDebug() << "Retrieving credentials from DB in any exist";
-    std::cout << "Retrieving credentials from DB in any exist" << std::endl;
+    std::cout << "Retrieving credentials from DB in any exist for hostname " << hostname.toStdString() << std::endl;
     QSqlQuery query("SELECT * FROM hosts where hostname = '" + hostname + "'");
     while (query.next()) {
+        std::cout << "Retrieving a host data set..." << std::endl;
         hostname = query.value(0).toString();
         userName = query.value(1).toString();
         password = query.value(2).toString();
@@ -168,9 +165,10 @@ void HostManagerWindow::buttonSaveCredentialsClicked()
     QString password = m_ui->passwordLineEdit->text();
 
     QSqlQuery query("INSERT INTO hosts (hostname) VALUES ('" + hostName + "')" );
+    auto result  = query.exec();
 
     query = QSqlQuery("update hosts set username = '" + userName + "' where hostname = '" + hostName + "'" );
-    auto result  = query.exec();
+    result  = query.exec();
 
     query = QSqlQuery("update hosts set password = '" + password + "' where hostname = '" + hostName + "'");
     result  = query.exec();

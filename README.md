@@ -31,6 +31,7 @@ https://www.emqx.com/en/blog/how-to-create-an-mqtt-application-in-qt6#common-com
 Under Linux use your repo manager zypper, apt-get to install libqt6mqtt.
 
 # Installation
+Use sqllite database manager to import the initial hosts table file (see ./installation).
 
 # Architecture and Philosophy
 
